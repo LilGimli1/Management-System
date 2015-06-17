@@ -13,7 +13,7 @@ def ImportSales():
 	from tkinter import ttk
 	import tkinter.scrolledtext as tkst
 	file = open("Sales.pickle",'rb')
-	Sales = pickle.load(file)
+	Object_file = pickle.load(file)
 	file.close()
 	
 	text_widget = tkst.ScrolledText(root, height=8, width=50)
