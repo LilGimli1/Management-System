@@ -1,0 +1,223 @@
+from tkinter import *
+from tkinter import ttk
+import tkinter.scrolledtext as tkst
+from sales import Sales
+
+
+root = Tk()
+root.title("Business Management System")
+root.resizable(width=FALSE, height=FALSE)
+
+
+def ImportSales():
+#Importing From sales.py
+	import pickle
+	import tkinter
+	from tkinter import ttk
+	import tkinter.scrolledtext as tkst
+	from sales import Sales
+	file = open("Sales.pickle",'rb')
+	Object_file = pickle.load(file)
+	file.close()
+
+
+	
+
+def Addfunction():
+	import subprocess
+
+	subprocess.call("pickletest2.py", shell=True)
+	
+	
+def SalesGUI():
+#SalesGUI function
+	root = Toplevel()
+	root.title("Sales Made")
+	root.resizable(width=FALSE, height=FALSE)
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	ttk.Label(mainframe, text="Sales", padding="5 5 5 5").grid(column=1, row=0, sticky=N)
+
+	ttk.Button(mainframe, text="Add", width = 23, padding="5 5 5 5", command=Addfunction).grid(column=0, row=1, sticky=N)
+	ttk.Button(mainframe, text="Import", width = 23, padding="5 5 5 5", command=ImportSales).grid(column=1, row=1, sticky=W)
+	ttk.Button(mainframe, text="Exit", width = 23, padding="5 5 5 5", command=root.destroy).grid(column=2, row=1, sticky=W)
+	#ttk.Label(mainframe, text=(x.get(), y.get(),z.get()), padding="5 5 5 5").grid(column=2, row=3, sticky=N)
+	
+	text_widget = tkst.ScrolledText(root, height=8, width=50)
+	text_widget.grid(column=0, row=2, sticky=(N, E, S, W))
+	text_widget.insert(INSERT,'Sales Will Be Displayed Here')
+	
+
+
+
+
+
+
+#PurchasesGUI Function
+
+def PurchasesGUI():
+	root = Toplevel()
+	root.title("Purchases Made")
+	root.resizable(width=FALSE, height=FALSE)
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	ttk.Label(mainframe, text="Purchases", padding="5 5 5 5").grid(column=2, row=0, sticky=N)
+
+	ttk.Button(mainframe, text="Add", width = 23, padding="5 5 5 5", command=Addfunction).grid(column=0, row=1, sticky=N)
+	ttk.Button(mainframe, text="Import", width = 23, padding="5 5 5 5").grid(column=1, row=1, sticky=W)
+	ttk.Button(mainframe, text="Exit", width = 23, padding="5 5 5 5", command=root.destroy).grid(column=2, row=1, sticky=W)
+	
+
+	text_widget = tkst.ScrolledText(root, height=8, width=50)
+	text_widget.grid(column=0, row=2, sticky=(N, E, S, W))
+	text_widget.insert(INSERT, 'Purchases Will Be Displayed Here')
+
+#Customer Details GUI Function
+
+def CustDetailsGUI():
+	root = Toplevel()
+	root.title("Customer Details")
+	root.resizable(width=FALSE, height=FALSE)
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	ttk.Label(mainframe, text="Customer Details", padding="5 5 5 5").grid(column=2, row=0, sticky=N)
+
+	ttk.Button(mainframe, text="Add", width = 23, padding="5 5 5 5", command=Addfunction).grid(column=0, row=1, sticky=N)
+	ttk.Button(mainframe, text="Import", width = 23, padding="5 5 5 5").grid(column=1, row=1, sticky=W)
+	ttk.Button(mainframe, text="Exit", width = 23, padding="5 5 5 5", command=root.destroy).grid(column=2, row=1, sticky=W)
+	
+
+	text_widget = tkst.ScrolledText(root, height=8, width=50)
+	text_widget.grid(column=0, row=2, sticky=(N, E, S, W))
+	text_widget.insert(INSERT, 'Customer Details Will Be Displayed Here')
+
+#GSTGUI Function
+
+def GSTGUI():
+
+	def calculate(*args):
+		try:
+			value = float(sales.get())
+			GST.set((0.1 * value * 10000.0)/10000.0)
+		except ValueError:
+			pass
+		
+	root = Toplevel()
+	root.title("sales to GST")
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	sales = StringVar()
+	GST = StringVar()
+
+	sales_entry = ttk.Entry(mainframe, width=7, textvariable=sales)
+	sales_entry.grid(column=2, row=1, sticky=(W, E))
+
+	ttk.Label(mainframe, textvariable=GST).grid(column=2, row=2, sticky=(W, E))
+	ttk.Button(mainframe, text="Calculate", command=calculate).grid(column=3, row=3, sticky=W)
+
+	ttk.Label(mainframe, text="sales").grid(column=3, row=1, sticky=W)
+	ttk.Label(mainframe, text="is equivalent to $").grid(column=1, row=2, sticky=E)
+	ttk.Label(mainframe, text="GST").grid(column=3, row=2, sticky=W)
+
+	for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+
+	sales_entry.focus()
+	root.bind('<Return>', calculate)
+
+	root.mainloop()
+
+
+
+#StoreInvGUI Function
+
+def StoreInvGUI():
+
+	root = Toplevel()
+	root.title("Store Inventory")
+	root.resizable(width=FALSE, height=FALSE)
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	ttk.Label(mainframe, text="Store Inventory", padding="5 5 5 5").grid(column=2, row=0, sticky=N)
+
+	ttk.Button(mainframe, text="Add", width = 23, padding="5 5 5 5", command=Addfunction).grid(column=0, row=1, sticky=N)
+	ttk.Button(mainframe, text="Import", width = 23, padding="5 5 5 5").grid(column=1, row=1, sticky=W)
+	ttk.Button(mainframe, text="Exit", width = 23, padding="5 5 5 5", command=root.destroy).grid(column=2, row=1, sticky=W)
+
+
+	text_widget = tkst.ScrolledText(root, height=8, width=50)
+	text_widget.grid(column=0, row=2, sticky=(N, E, S, W))
+	text_widget.insert(INSERT, 'Store Inventory Will Be Displayed Here')
+
+#WarehouseInvGUI Function
+
+def WarehouseInvGUI():
+	root = Toplevel()
+	root.title("Warehouse Inventory")
+	root.resizable(width=FALSE, height=FALSE)
+
+	mainframe = ttk.Frame(root, padding="3 3 12 12")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=1)
+	mainframe.rowconfigure(0, weight=1)
+
+	ttk.Label(mainframe, text="Warehouse Inventory", padding="5 5 5 5").grid(column=2, row=0, sticky=N)
+
+	ttk.Button(mainframe, text="Add", width = 23, padding="5 5 5 5", command=Addfunction).grid(column=0, row=1, sticky=N)
+	ttk.Button(mainframe, text="Import", width = 23, padding="5 5 5 5").grid(column=1, row=1, sticky=W)
+	ttk.Button(mainframe, text="Exit", width = 23, padding="5 5 5 5", command=root.destroy).grid(column=2, row=1, sticky=W)
+	
+
+	text_widget = tkst.ScrolledText(root, height=8, width=50)
+	text_widget.grid(column=0, row=2, sticky=(N, E, S, W))
+	text_widget.insert(INSERT, 'Warehouse Inventory Will Be Displayed Here')
+
+#MainMenu Code
+def MainGui() :
+	root.geometry('{}x{}'.format(800, 400))
+	
+	mainframe = ttk.Frame(root, padding="5 5 5 5")
+	mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+	mainframe.columnconfigure(0, weight=3, minsize = 40)
+	mainframe.rowconfigure(0, weight=1, minsize = 40)
+	
+	ttk.Label(mainframe, text="Management System").grid(column=2, row=0, sticky=N)
+	
+	ttk.Button(mainframe, text="Sales", width = 35, padding="5 5 5 5", command=SalesGUI).grid(column=1, row=3, sticky=W)
+	ttk.Button(mainframe, text="Purchases", width = 35, padding="5 5 5 5", command=PurchasesGUI).grid(column=1, row=5, sticky=W)
+	ttk.Button(mainframe, text="Warehouse Inventory", width = 35, padding="5 5 5 5", command=WarehouseInvGUI).grid(column=1, row=7, sticky=W)
+	
+	ttk.Button(mainframe, text="Customer Details", width = 35, padding="5 5 5 5", command=CustDetailsGUI).grid(column=2, row=3, sticky=N)
+	ttk.Button(mainframe, text="GST Calculation", width = 35, padding="5 5 5 5", command=GSTGUI).grid(column=2, row=5, sticky=N)
+	
+	ttk.Button(mainframe, text="Store 1 Inventory", width = 35, padding="5 5 5 5", command=StoreInvGUI).grid(column=3, row=3, sticky=E)
+	ttk.Button(mainframe, text="Store 2 Inventory", width = 35, padding="5 5 5 5", command=StoreInvGUI).grid(column=3, row=5, sticky=E)
+	ttk.Button(mainframe, text="Store 3 Inventory", width = 35, padding="5 5 5 5", command=StoreInvGUI).grid(column=3, row=7, sticky=E)
+
+	#
+	#
+	#
+	#
+	#
+	#
+MainGui()	
+root.mainloop()
