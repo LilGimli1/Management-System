@@ -1,3 +1,6 @@
+from tkinter import *
+#import tkinter for use
+
 class Sales:
     def __getstate__(self):
         state = self.__dict__.copy()
